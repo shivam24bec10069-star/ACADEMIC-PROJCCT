@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiFlow Pro - Academic Project Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent: #0284c7;
+            --text: #1f2937;
+            --text-light: #4b5563;
+            --bg: #ffffff;
+            --card-bg: #f8fafc;
+            --border: #e2e8f0;
+            --success: #16a34a;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text);
+            background-color: #f1f5f9;
+            line-height: 1.65;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--bg);
+            padding: 60px 80px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 8px;
+        }
+
+        .cover-page {
+            text-align: center;
+            padding: 80px 20px;
+            border-bottom: 3px double var(--primary);
+            margin-bottom: 60px;
+        }
+
+        .university-header {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0 10px 0;
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+
+        .metadata-box {
+            display: inline-block;
+            text-align: left;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px 30px;
+            margin-top: 30px;
+            min-width: 380px;
+        }
+
+        .metadata-box p {
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .metadata-box strong {
+            color: var(--primary);
+            display: inline-block;
+            width: 150px;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 8px;
+            margin-top: 50px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--accent);
+            margin-top: 30px;
+            font-size: 1.25rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 16px 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.88rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.45;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #0f172a;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        .mermaid {
+            background: #ffffff;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .badge-pass {
+            background-color: #dcfce7;
+            color: #15803d;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .print-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .print-btn {
+                display: none;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            h2 {
+                page-break-after: avoid;
+            }
+            table, pre, .mermaid {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+    Print / Save as PDF
+</button>
+
+<div class="container">
+
+    <!-- SECTION 1: COVER PAGE -->
+    <div class="cover-page">
+        <div class="university-header">Department of Computer Science & Engineering</div>
+        <div class="university-header">Course Evaluation: Programming in Java</div>
+        <h1 class="project-title">LogiFlow Pro</h1>
+        <div class="project-subtitle">Intelligent Multi-Modal Logistics & Freight Dispatching System</div>
+
+        <div class="metadata-box">
+            <p><strong>Course:</strong> Programming in Java</p>
+            <p><strong>Evaluation:</strong> Flipped Course Evaluated Project</p>
+            <p><strong>Submission Date:</strong> September 18, 2026</p>
+            <p><strong>Interface Mode:</strong> Command-Line Interface (CLI)</p>
+            <p><strong>Repository Type:</strong> Public GitHub Repository</p>
+            <p><strong>Platform Support:</strong> Windows / Linux / macOS (JDK 17+)</p>
+        </div>
+    </div>
+
+    <!-- SECTION 2: INTRODUCTION -->
+    <div class="page-break"></div>
+    <h2>2. Introduction</h2>
+    <p>
+        Modern supply chain operations require intelligent management of distributed transport assets, complex intermodal route optimization, and rigorous enforcement of vehicle payload limits. In an era where same-day delivery SLAs and environmental sustainability criteria dictate commercial viability, logistics operations can no longer rely on static heuristic dispatching.
+    </p>
+    <p>
+        <strong>LogiFlow Pro</strong> is an enterprise-grade freight logistics execution platform written entirely in pure Java. The project simulates a multi-state intermodal transport network, integrating polymorphic tariff computation, Dijkstra's algorithm for shortest-path routing with pluggable optimization criteria, greedy priority scheduling, and multi-threaded sensor telemetry tracking. Designed with zero third-party dependencies, the system runs out of the box on any terminal environment.
+    </p>
+
+    <!-- SECTION 3: PROBLEM STATEMENT -->
+    <h2>3. Problem Statement</h2>
+    <p>
+        Logistics management systems suffer from four systemic operational bottlenecks:
+    </p>
+    <ul>
+        <li><strong>Heterogeneous Freight Rules:</strong> Cargo varies drastically in fragility, handling, and priority. Standardized billing fails to capture express SLA commitments or fragile insurance liabilities.</li>
+        <li><strong>Multi-Dimensional Routing Constraints:</strong> Conventional pathfinding optimizes solely for distance, ignoring time-critical express deadlines, expensive commercial highway tolls, and carbon emissions.</li>
+        <li><strong>Capacity Starvation:</strong> Dispatching without priority weighting allows standard bulk freight to monopolize vehicle capacities, leaving urgent medical or perishable shipments delayed at departure docks.</li>
+        <li><strong>Asynchronous Telemetry Gaps:</strong> Single-threaded tracking cannot model concurrent vehicle transits or handle random road incidents like traffic delays and checkpoint inspections.</li>
+    </ul>
+
+    <!-- SECTION 4: FUNCTIONAL REQUIREMENTS -->
+    <h2>4. Functional Requirements</h2>
+    <ul>
+        <li><strong>FR-1 (Fleet & Cargo Intake):</strong> Register polymorphic consignments (<em>Standard</em>, <em>Express</em>, <em>Fragile</em>) with polymorphic billing factoring in distance, gross weight, volume, SLA windows, and shock tolerances.</li>
+        <li><strong>FR-2 (Corridor Pathfinding):</strong> Model an intermodal network of distribution hubs and transit edges. Execute Dijkstra's algorithm across pluggable optimization criteria (<em>Fastest</em>, <em>Cheapest</em>, <em>Eco-Friendly</em>).</li>
+        <li><strong>FR-3 (Priority Dispatching):</strong> Schedule shipments using a <code>PriorityQueue</code> that prioritizes urgent items and matches available fleet assets based on payload weight and volumetric capacity.</li>
+        <li><strong>FR-4 (Concurrent Telemetry Simulator):</strong> Asynchronously simulate vehicle journeys using a thread pool (<code>ExecutorService</code>) and synchronization latches (<code>CountDownLatch</code>), injecting random traffic delay events.</li>
+        <li><strong>FR-5 (Stream Analytics):</strong> Generate operational KPIs using Java Stream API collectors (gross revenue, weight summaries, fleet utilization %, and $kg\ CO_2$ emissions).</li>
+        <li><strong>FR-6 (Persistence & Audit):</strong> Persist state to CSV and log operational events to a thread-safe audit log.</li>
+    </ul>
+
+    <!-- SECTION 5: NON-FUNCTIONAL REQUIREMENTS -->
+    <h2>5. Non-Functional Requirements</h2>
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td><strong>Performance & Latency</strong></td>
+            <td>Dijkstra calculations complete in &lt;10ms; full automated test suite runs in &lt;500ms.</td>
+        </tr>
+        <tr>
+            <td><strong>Thread Safety</strong></td>
+            <td>Concurrent state updates managed via <code>ConcurrentHashMap</code> and <code>synchronized</code> blocks.</td>
+        </tr>
+        <tr>
+            <td><strong>Fault Tolerance</strong></td>
+            <td>Custom checked exceptions (<code>LogisticsException</code> hierarchy) handle edge cases without crashing.</td>
+        </tr>
+        <tr>
+            <td><strong>Portability</strong></td>
+            <td>Zero external frameworks or package managers required; compiles with standard <code>javac</code>.</td>
+        </tr>
+    </table>
+
+    <!-- SECTION 6: SYSTEM ARCHITECTURE -->
+    <div class="page-break"></div>
+    <h2>6. System Architecture</h2>
+    <p>
+        LogiFlow Pro adopts a clean, layered architectural style separating the presentation, service orchestration, domain logic, and data persistence layers:
+    </p>
+    <pre>
++-------------------------------------------------------------------------+
+|                        PRESENTATION LAYER (CLI)                         |
+|  - Main.java (Interactive Management Console & Automated Demo Runner)   |
+|  - ConsoleNotificationListener.java (Observer Pattern Alert Output)     |
++-------------------------------------------------------------------------+
+                                     |
+                                     v
++-------------------------------------------------------------------------+
+|                             SERVICE LAYER                               |
+|  - RoutingService     : Dijkstra Graph Pathfinding                      |
+|  - DispatchService    : PriorityQueue Fleet Matchmaking                 |
+|  - TelemetrySimulator : Multithreaded Transit Coordinator               |
+|  - FleetService       : Vehicle Asset Registry & Availability           |
+|  - ShipmentService    : Shipment Lifecycle & Observer Subject           |
+|  - AnalyticsService   : Java Stream API Summaries & KPIs                |
++-------------------------------------------------------------------------+
+                                     |
+                                     v
++-------------------------------------------------------------------------+
+|                         DOMAIN & PATTERN LAYER                          |
+|  - Models   : Shipment, StandardShipment, ExpressShipment, Vehicle     |
+|  - Patterns : Factory, Strategy (Routing), Observer, Singleton Log     |
+|  - Custom Exceptions: LogisticsException, InsufficientCapacityException |
++-------------------------------------------------------------------------+
+                                     |
+                                     v
++-------------------------------------------------------------------------+
+|                        STORAGE & PERSISTENCE LAYER                      |
+|  - FilePersistenceManager : CSV Importer / Exporter                     |
+|  - AuditLogger            : Thread-safe, synchronized operational log   |
++-------------------------------------------------------------------------+
+    </pre>
+
+    <!-- SECTION 7: DESIGN DIAGRAMS -->
+    <div class="page-break"></div>
+    <h2>7. Design Diagrams</h2>
+
+    <h3>7.1 Use Case Diagram</h3>
+    <div class="mermaid">
+    graph TD
+        User((Dispatcher / Operator))
+        User --> UC1[Register New Shipment]
+        User --> UC2[View Shipment Registry]
+        User --> UC3[Inspect Fleet Assets]
+        User --> UC4[Calculate Optimal Route Dijkstra]
+        User --> UC5[Trigger PriorityQueue Dispatch]
+        User --> UC6[Run Concurrent Telemetry Simulation]
+        User --> UC7[View Operational Stream Analytics]
+        User --> UC8[Export / Persist State to CSV]
+        User --> UC9[Execute Automated Test Suite]
+    </div>
+
+    <h3>7.2 Workflow Diagram</h3>
+    <div class="mermaid">
+    flowchart TD
+        Start([Start Intake]) --> Ingest[Consignment Parameters]
+        Ingest --> Factory[ShipmentFactory.createShipment]
+        Factory --> Enqueue[PriorityQueue Dispatcher]
+        Enqueue --> Match{Vehicle Available at Hub?}
+        Match -- Yes --> Load[Vehicle.loadShipment: Lock Capacity]
+        Match -- No --> Wait[Await Available Fleet]
+        Load --> Transit[TelemetrySimulator: ExecutorService]
+        Transit --> Delivered[Status: DELIVERED]
+        Delivered --> Complete([Trip Complete])
+    </div>
+
+    <h3>7.3 Sequence Diagram</h3>
+    <div class="mermaid">
+    sequenceDiagram
+        actor User as Dispatcher
+        participant Dispatch as DispatchService
+        participant PQ as PriorityQueue
+        participant Fleet as FleetService
+        participant Sim as TelemetrySimulator
+        participant Obs as Observer
+
+        User->>Dispatch: dispatchAll()
+        Dispatch->>PQ: poll()
+        PQ-->>Dispatch: returns ExpressShipment
+        Dispatch->>Fleet: findBestVehicleForShipment()
+        Fleet-->>Dispatch: returns Vehicle
+        Dispatch->>Obs: onStatusUpdate(ASSIGNED)
+        User->>Sim: simulateActiveTransits()
+        Sim->>Obs: onStatusUpdate(IN_TRANSIT)
+        Sim->>Sim: Concurrent transit simulation
+        Sim->>Obs: onStatusUpdate(DELIVERED)
+    </div>
+
+    <h3>7.4 Class Diagram</h3>
+    <div class="mermaid">
+    classDiagram
+        class Shipment {
+            <<abstract>>
+            -String id
+            -double weightKg
+            -double volumeM3
+            -ShipmentStatus status
+            +calculateCost(distanceKm)* double
+            +getShipmentType()* String
+            +compareTo(Shipment other) int
+        }
+        class StandardShipment {
+            +calculateCost(distanceKm) double
+        }
+        class ExpressShipment {
+            -int slaHoursGuarantee
+            +calculateCost(distanceKm) double
+        }
+        class FragileShipment {
+            -double maxGForceAllowed
+            +calculateCost(distanceKm) double
+        }
+        class Vehicle {
+            -String id
+            -VehicleType type
+            -double currentPayloadKg
+            +canAccommodate(weight, volume) boolean
+            +loadShipment(shipment) void
+        }
+        class RoutingStrategy {
+            <<interface>>
+            +calculateCost(segment) double
+        }
+
+        Shipment <|-- StandardShipment
+        Shipment <|-- ExpressShipment
+        Shipment <|-- FragileShipment
+        RoutingStrategy <|.. FastestRoutingStrategy
+        RoutingStrategy <|.. CheapestRoutingStrategy
+        RoutingStrategy <|.. EcoRoutingStrategy
+    </div>
+
+    <!-- SECTION 8: DESIGN DECISIONS & RATIONALE -->
+    <div class="page-break"></div>
+    <h2>8. Design Decisions & Rationale</h2>
+    <ol>
+        <li><strong>Standard JDK Only:</strong> Guarantees zero friction for academic evaluators without requiring network-dependent package managers or external containers.</li>
+        <li><strong>Strategy Pattern for Multi-Criteria Routing:</strong> Decouples the Dijkstra graph traversal algorithm from the edge cost function, enabling instant runtime switching between fastest, cheapest, and eco-optimized modes.</li>
+        <li><strong>PriorityQueue Scheduling:</strong> Prevents priority inversion and cargo starvation by natively scheduling urgent medical and express freight ahead of standard bulk cargo.</li>
+        <li><strong>ExecutorService & CountDownLatch:</strong> Delivers clean thread management for concurrent vehicle tracking, preventing busy-wait CPU thrashing.</li>
+    </ol>
+
+    <!-- SECTION 9: IMPLEMENTATION DETAILS -->
+    <h2>9. Implementation Details</h2>
+    <p>
+        The project comprises 20 modular classes organized into 6 packages:
+    </p>
+    <ul>
+        <li><code>com.logiflow.model</code>: Abstract and concrete shipments, vehicles, network nodes, and route segments.</li>
+        <li><code>com.logiflow.service</code>: Core business logic (routing, dispatching, telemetry, analytics).</li>
+        <li><code>com.logiflow.pattern</code>: Factory, Strategy, and Observer pattern implementations.</li>
+        <li><code>com.logiflow.exception</code>: Custom checked exception hierarchy.</li>
+        <li><code>com.logiflow.storage</code>: CSV persistence and thread-safe audit logging.</li>
+        <li><code>com.logiflow.test</code>: Standalone automated unit and integration test runner.</li>
+    </ul>
+
+    <!-- SECTION 10: RESULTS & TRANSCRIPTS -->
+    <div class="page-break"></div>
+    <h2>10. Execution Results & Transcripts</h2>
+    <p>Output from <code>java -cp bin com.logiflow.Main --demo</code>:</p>
+    <pre>
+================ DISPATCH EXECUTION REPORT ================
+Successfully Assigned: 8  |  Pending/Unassigned: 0
+-----------------------------------------------------------
+[SUCCESS] Shipment SHP-1001 (EXPRESS  | 120.5 kg) ==> FLT-VN102  (Driver: Elena Rostova)
+[SUCCESS] Shipment SHP-1004 (EXPRESS  | 420.0 kg) ==> FLT-SM301  (Driver: Robert Kowalski)
+[SUCCESS] Shipment SHP-1007 (EXPRESS  | 310.0 kg) ==> FLT-EV401  (Driver: Liam O'Connor)
+[SUCCESS] Shipment SHP-1002 (FRAGILE  |  45.0 kg) ==> FLT-VN101  (Driver: Marcus Vance)
+[SUCCESS] Shipment SHP-1006 (FRAGILE  |  65.0 kg) ==> FLT-SM302  (Driver: Aisha Morales)
+[SUCCESS] Shipment SHP-1008 (STANDARD | 1150.0 kg) ==> FLT-SM301  (Driver: Robert Kowalski)
+[SUCCESS] Shipment SHP-1003 (STANDARD | 1850.0 kg) ==> FLT-TK202  (Driver: Sarah Jenkins)
+[SUCCESS] Shipment SHP-1005 (STANDARD | 780.0 kg) ==> FLT-TK203  (Driver: James Rodriguez)
+===========================================================
+
+[Telemetry Engine] Initiating concurrent transit simulation for 7 fleet units...
+[EVENT] >>> Shipment SHP-1001: ASSIGNED -> IN_TRANSIT
+[EVENT] >>> Shipment SHP-1001: IN_TRANSIT -> DELIVERED (Depot: DEN)
+[Telemetry Engine] All fleet missions completed successfully.
+    </pre>
+
+    <!-- SECTION 11: TESTING APPROACH -->
+    <h2>11. Testing Approach & Verification</h2>
+    <table>
+        <tr>
+            <th>Test ID</th>
+            <th>Test Case Description</th>
+            <th>Result</th>
+        </tr>
+        <tr>
+            <td><code>TC-01</code></td>
+            <td>Polymorphic shipment instantiation via Factory</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-02</code></td>
+            <td>Tariff calculation accuracy across cargo types</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-03</code></td>
+            <td>Vehicle capacity limit enforcement (Exception thrown)</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-04</code></td>
+            <td>Dijkstra shortest pathfinding corridor resolution</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-05</code></td>
+            <td>Alternative routing strategies (Fastest vs Cheapest vs Eco)</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-06</code></td>
+            <td>PriorityQueue ordering (Express &gt; Fragile &gt; Standard)</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-07</code></td>
+            <td>Observer notification dispatching on status change</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-08</code></td>
+            <td>CSV file persistence serialization and deserialization</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-09</code></td>
+            <td>Stream API operational analytics summaries</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-10</code></td>
+            <td>Custom checked exceptions trapping</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+        <tr>
+            <td><code>TC-11</code></td>
+            <td>Multithreaded telemetry simulation and latch synchronization</td>
+            <td><span class="badge-pass">PASS</span></td>
+        </tr>
+    </table>
+    <p><strong>Overall Test Suite: 11 / 11 Passed (100% Success Rate).</strong></p>
+
+    <!-- SECTION 12: CHALLENGES FACED -->
+    <h2>12. Challenges Faced</h2>
+    <ul>
+        <li><strong>Path Escaping in Windows Shells:</strong> Addressed spaces in directory paths by normalizing backslashes to forward slashes in <code>build.bat</code>.</li>
+        <li><strong>Observer Namespace Conflict:</strong> Resolved collision between deprecated <code>java.util.Observer</code> and our custom domain <code>com.logiflow.pattern.Observer</code> using explicit single-type imports.</li>
+        <li><strong>Thread Synchronization:</strong> Coordinated worker threads without busy-waiting by utilizing <code>CountDownLatch</code>.</li>
+    </ul>
+
+    <!-- SECTION 13: LEARNINGS -->
+    <h2>13. Learnings & Key Takeaways</h2>
+    <p>
+        Building LogiFlow Pro provided rigorous practical mastery of object-oriented design patterns (Factory, Strategy, Observer, Singleton), the Java Collections Framework (priority queues, concurrent maps), the Stream API for data manipulation, and multi-threaded coordination.
+    </p>
+
+    <!-- SECTION 14: FUTURE ENHANCEMENTS -->
+    <h2>14. Future Enhancements</h2>
+    <ul>
+        <li>Dynamic Vehicle Routing Problem (DVRP) with delivery time window scheduling.</li>
+        <li>Microservice REST API integration using lightweight embedded HTTP servers.</li>
+        <li>JDBC integration with relational databases (PostgreSQL/SQLite).</li>
+        <li>Predictive machine learning models for real-time traffic delay estimation.</li>
+    </ul>
+
+    <!-- SECTION 15: REFERENCES -->
+    <h2>15. References</h2>
+    <ol>
+        <li>Bloch, Joshua. <em>Effective Java (3rd Edition)</em>. Addison-Wesley, 2018.</li>
+        <li>Gamma, Erich, et al. <em>Design Patterns: Elements of Reusable Object-Oriented Software</em>. Addison-Wesley, 1994.</li>
+        <li>Cormen, Thomas H., et al. <em>Introduction to Algorithms (4th Edition)</em>. MIT Press, 2022.</li>
+        <li>Oracle Corporation. <em>Java SE 21 & 25 Documentation</em>. Oracle Technology Network, 2024–2026.</li>
+    </ol>
+
+</div>
+
+<script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+</script>
+
+</body>
+</html>

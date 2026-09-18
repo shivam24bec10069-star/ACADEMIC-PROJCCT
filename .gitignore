@@ -1,0 +1,15 @@
+# Compiled class files
+bin/
+*.class
+
+# Log files and temporary files
+*.log
+sources.txt
+
+# IDE metadata
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
